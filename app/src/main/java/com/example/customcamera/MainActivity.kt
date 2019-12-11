@@ -1,6 +1,7 @@
 package com.example.customcamera
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.ImageFormat
@@ -13,26 +14,24 @@ import android.os.Bundle
 import android.os.Environment
 import android.os.Handler
 import android.os.HandlerThread
-import android.support.v4.app.ActivityCompat
-import android.support.v4.content.ContextCompat
 import android.support.v4.content.ContextCompat.checkSelfPermission
 import android.support.v7.app.AppCompatActivity
-import android.util.AttributeSet
 import android.util.Log
 import android.view.Surface
 import android.view.TextureView
-import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
-import java.security.Permission
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity()  {
+
     var mBackgroundThread: HandlerThread? = null
     var mBackgroundHandler: Handler? = null
+
+    private var surfaceTextureListener: TextureView.SurfaceTextureListener? = null
 
     var myCameras = arrayListOf<CameraService>()
     var mCameraManager: CameraManager? = null
@@ -57,9 +56,23 @@ class MainActivity : AppCompatActivity() {
             for (camera in mCameraManager!!.cameraIdList) {
                 myCameras.add(CameraService(mCameraManager!!, camera, this))
             }
-            if (myCameras[camera1] != null)
-                if (!myCameras[camera1].isOpen)
-                    myCameras[camera1].openCamera()
+            surfaceTextureListener = object : TextureView.SurfaceTextureListener {
+                override fun onSurfaceTextureSizeChanged(p0: SurfaceTexture?, p1: Int, p2: Int) { }
+
+                override fun onSurfaceTextureUpdated(p0: SurfaceTexture?) { }
+
+                @SuppressLint("NewApi")
+                override fun onSurfaceTextureDestroyed(p0: SurfaceTexture?): Boolean {
+                    return p0!!.isReleased
+                }
+
+                override fun onSurfaceTextureAvailable(p0: SurfaceTexture?, p1: Int, p2: Int) {
+                    if (myCameras[camera1] != null)
+                        if (!myCameras[camera1].isOpen)
+                            myCameras[camera1].openCamera()
+                }
+            }
+            texture_view.surfaceTextureListener = surfaceTextureListener
         }
     }
 
@@ -166,6 +179,7 @@ class MainActivity : AppCompatActivity() {
         if (myCameras[camera1].isOpen)
             myCameras[camera1].closeCamera()
     }
+
     private fun startBackgroundThread() {
         mBackgroundThread = HandlerThread("CameraBackground")
         mBackgroundThread!!.start()
@@ -194,7 +208,7 @@ class MainActivity : AppCompatActivity() {
         private lateinit var mCaptureSession: CameraCaptureSession
         private lateinit var mCameraCallback: CameraDevice.StateCallback
         var mImageReader: ImageReader? = null
-        private var file: File = File(Environment.DIRECTORY_DCIM, "your best photo.jpg")
+        private var file: File = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "your best photo.jpg")
 
         private val mOnImageAvailableListener: ImageReader.OnImageAvailableListener =
             ImageReader.OnImageAvailableListener { reader ->
@@ -216,7 +230,7 @@ class MainActivity : AppCompatActivity() {
                         override fun onOpened(cameraDevice: CameraDevice) {
                             mCameraDevice = cameraDevice
                             Log.d("Camera", "Open camera  with id:" + mCameraDevice!!.id)
-                            createCameraPreviewSession()
+                            createCameraPreviewSession(activity)
                         }
 
                         override fun onDisconnected(p0: CameraDevice) {
@@ -239,13 +253,13 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        private fun createCameraPreviewSession() {
+        private fun createCameraPreviewSession(activity: MainActivity) {
             mImageReader = ImageReader.newInstance(2592, 1936, ImageFormat.JPEG, 1)
             mImageReader!!.setOnImageAvailableListener(mOnImageAvailableListener, null)
 
-
-            //texture_view = activity.findViewById<TextureView>(R.id.texture_view)
-            var texture: SurfaceTexture = texture_view.surfaceTexture
+//TODO
+            var textureView = activity.findViewById<TextureView>(R.id.texture_view)
+            var texture: SurfaceTexture = textureView.surfaceTexture
             texture.setDefaultBufferSize(2592, 1936)
             var surface = Surface(texture)
             try {

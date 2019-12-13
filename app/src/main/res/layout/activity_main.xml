@@ -12,11 +12,67 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
         <Button
             android:id="@+id/get_picture"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:text="Get it"/>
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/background"
+            android:text="@string/take_picture"
+            android:textSize="15sp"
+            android:textColor="@color/text_dropdownMenu_item"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/background_dropdownMenu"
+                android:paddingStart="30dp"
+                android:paddingEnd="30dp"
+                android:text="@string/repeats"
+                android:textColor="@color/text_dropdownMenu_item"
+                android:textStyle="bold"
+                android:enabled="false"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/background">
+
+                <Spinner
+                    android:id="@+id/spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="end"
+                    android:textAlignment="center"
+                    android:background="@android:color/transparent"
+                    android:layout_marginRight="30dp"
+                    android:spinnerMode="dropdown"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:paddingBottom="5dp"
+                    android:src="@drawable/downarrow"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
     </LinearLayout>
 </RelativeLayout>

@@ -22,8 +22,8 @@
             android:layout_weight="1"
             android:background="@drawable/background"
             android:text="@string/take_picture"
-            android:textSize="15sp"
             android:textColor="@color/text_dropdownMenu_item"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
         <LinearLayout
@@ -31,48 +31,93 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@color/background_dropdownMenu"
-                android:paddingStart="30dp"
-                android:paddingEnd="30dp"
-                android:text="@string/repeats"
-                android:textColor="@color/text_dropdownMenu_item"
-                android:textStyle="bold"
-                android:enabled="false"/>
-
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/background">
+                android:orientation="vertical">
 
-                <Spinner
-                    android:id="@+id/spinner"
+                <EditText
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:gravity="end"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/background_dropdownMenu"
+                    android:enabled="false"
                     android:textAlignment="center"
-                    android:background="@android:color/transparent"
-                    android:layout_marginRight="30dp"
-                    android:spinnerMode="dropdown"/>
+                    android:text="@string/repeats"
+                    android:textColor="@color/text_dropdownMenu_item"
+                    android:textStyle="bold" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="15dp"
-                    android:paddingBottom="5dp"
-                    android:src="@drawable/downarrow"
-                    android:adjustViewBounds="true"
-                    android:scaleType="centerCrop" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/background">
 
-            </RelativeLayout>
+                    <Spinner
+                        android:id="@+id/spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginRight="30dp"
+                        android:background="@android:color/transparent"
+                        android:gravity="end"
+                        android:spinnerMode="dropdown"
+                        android:textAlignment="center" />
 
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="15dp"
+                        android:adjustViewBounds="true"
+                        android:paddingBottom="5dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/downarrow" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/background_dropdownMenu"
+                    android:enabled="false"
+                    android:textAlignment="center"
+                    android:text="@string/timer"
+                    android:textColor="@color/text_dropdownMenu_item"
+                    android:textStyle="bold" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/background">
+                    <Spinner
+                        android:id="@+id/spinner_timer"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginRight="30dp"
+                        android:background="@android:color/transparent"
+                        android:gravity="end"
+                        android:spinnerMode="dropdown"
+                        android:textAlignment="center" />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="15dp"
+                        android:adjustViewBounds="true"
+                        android:paddingBottom="5dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/downarrow" />
+                </RelativeLayout>
+            </LinearLayout>
         </LinearLayout>
-
     </LinearLayout>
 </RelativeLayout>

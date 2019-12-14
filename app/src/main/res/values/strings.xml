@@ -9,4 +9,5 @@
     </string-array>
     <string name="take_picture">Take picture</string>
     <string name="repeats">Повторы</string>
+    <string name="timer">Таймер</string>
 </resources>
